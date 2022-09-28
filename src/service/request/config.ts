@@ -1,6 +1,6 @@
-console.log(process.env.NODE_ENV)
+// 接口的配置 环境配置 以及baseurl的设置
 let BASE_URL = ''
-const TIME_OUT = 10000
+const BASE_OUT = 10000
 
 if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'http://123.207.32.32:8000'
@@ -10,4 +10,4 @@ if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'http://coderwhy.org/test'
 }
 
-export { BASE_URL, TIME_OUT }
+export { BASE_URL, BASE_OUT }

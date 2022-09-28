@@ -12,7 +12,12 @@ app.mount('#app')
 
 HYRequest.request({
   url: '/home/multidata',
-  method: 'GET'
+  method: 'GET',
+  interceptors: {
+    requestInterceptors: (config) => {
+      console.log('接口拦截')
+      return config
+    }
+  },
+  showLoading: false
 })
-
-console.log(process.env.VUE_APP_BASE_NAME)
