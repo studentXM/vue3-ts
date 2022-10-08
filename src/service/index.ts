@@ -10,7 +10,6 @@ const hyRequest = new HYRequest({
   interceptors: {
     // 请求拦截
     requestInterceptors: (config) => {
-      const token = ''
       console.log('实例拦截')
       return config
     },
