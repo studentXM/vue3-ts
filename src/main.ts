@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
 import HYRequest from './service'
 
 const app = createApp(App)
@@ -10,7 +9,13 @@ app.use(router)
 app.use(store)
 app.mount('#app')
 
-HYRequest.request({
+interface DataType {
+  data: any
+  returnCode: string
+  success: boolean
+}
+
+HYRequest.request<DataType>({
   url: '/home/multidata',
   method: 'GET',
   interceptors: {
@@ -22,4 +27,7 @@ HYRequest.request({
     }
   },
   showLoading: true
+}).then((res) => {
+  console.log('请求结果')
+  console.log(res)
 })

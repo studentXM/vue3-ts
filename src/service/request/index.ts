@@ -65,29 +65,49 @@ class HYRequest {
       }
     )
   }
-  request(config: HYRequestConfig): void {
-    if (config.interceptors?.requestInterceptors) {
-      config = config.interceptors.requestInterceptors(config)
-    }
+  request<T>(config: HYRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptors) {
+        config = config.interceptors.requestInterceptors(config)
+      }
 
-    if (config.showLoading === false) {
-      this.showLoading = false
-    }
+      if (config.showLoading === false) {
+        this.showLoading = false
+      }
 
-    this.instance
-      .request(config)
-      .then((res) => {
-        if (config.interceptors?.responseInterceptors) {
-          res = config.interceptors.responseInterceptors(res)
-        }
-        // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
-        this.showLoading = DEAFULT_LOADING
-      })
-      .catch((err) => {
-        // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
-        this.showLoading = DEAFULT_LOADING
-        return err
-      })
+      this.instance
+        .request<any, T>(config)
+        .then((res) => {
+          if (config.interceptors?.responseInterceptors) {
+            res = config.interceptors.responseInterceptors(res)
+          }
+          // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
+          this.showLoading = DEAFULT_LOADING
+          console.log(res)
+          resolve(res)
+        })
+        .catch((err) => {
+          // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
+          this.showLoading = DEAFULT_LOADING
+          reject(err)
+        })
+    })
+  }
+
+  get<T>(config: HYRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET' })
+  }
+
+  post<T>(config: HYRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
+  }
+
+  delete<T>(config: HYRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
+  }
+
+  patch<T>(config: HYRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 
