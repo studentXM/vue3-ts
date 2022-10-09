@@ -65,48 +65,51 @@ class HYRequest {
       }
     )
   }
-  request<T>(config: HYRequestConfig): Promise<T> {
+  request<T>(config: HYRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
+      // 对单个请求的处理
       if (config.interceptors?.requestInterceptors) {
         config = config.interceptors.requestInterceptors(config)
       }
-
+      // 判断是否显示loading
       if (config.showLoading === false) {
         this.showLoading = false
       }
 
       this.instance
+        // 第一个any是用来占位的 ， 实际上我们修改的是第二个泛型
         .request<any, T>(config)
         .then((res) => {
           if (config.interceptors?.responseInterceptors) {
+            // 对响应结果进行处理比如解构 减少无用属性
             res = config.interceptors.responseInterceptors(res)
           }
           // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
           this.showLoading = DEAFULT_LOADING
-          console.log(res)
           resolve(res)
         })
         .catch((err) => {
           // 请求完毕以后 将设置为默认值 不然其他请求也会打开showloading
           this.showLoading = DEAFULT_LOADING
           reject(err)
+          return err
         })
     })
   }
 
-  get<T>(config: HYRequestConfig): Promise<T> {
+  get<T>(config: HYRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: HYRequestConfig): Promise<T> {
+  post<T>(config: HYRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: HYRequestConfig): Promise<T> {
+  delete<T>(config: HYRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 
-  patch<T>(config: HYRequestConfig): Promise<T> {
+  patch<T>(config: HYRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }

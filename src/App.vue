@@ -1,11 +1,6 @@
 <template>
-  <div>
-    <router-link to="login">登陆</router-link>
-    <router-link to="main">首页</router-link>
+  <div class="app">
     <router-view></router-view>
-    <el-button>123</el-button>
-    <el-button>awdawd</el-button>
-    <el-button>awdawd</el-button>
   </div>
 </template>
 
@@ -13,18 +8,12 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App',
-  components: {}
+  name: 'App'
 })
 </script>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #091017;
-  margin-top: 60px;
+.app {
+  height: 100%;
 }
 </style>
