@@ -1,6 +1,6 @@
 <template>
   <div class="login-account">
-    <el-form :rules="rules" :model="account" label-width="50px">
+    <el-form :rules="rules" :model="account" label-width="60px" ref="forRef">
       <!-- props 的值 对应 rules里面的属性 才能进行校验 -->
       <el-form-item label="账号" prop="name">
         <el-input v-model="account.name"></el-input>
@@ -13,9 +13,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 // 导入账号验证配置对象
 import { rules } from '../config/account-config'
+import { ElForm } from 'element-plus'
 export default defineComponent({
   components: {},
   setup() {
@@ -24,14 +25,16 @@ export default defineComponent({
       password: ''
     })
 
+    const forRef = ref<InstanceType<typeof ElForm>>()
     const loginAction = () => {
-      console.log('开始登陆...')
+      console.log()
     }
 
     return {
       account,
       rules,
-      loginAction
+      loginAction,
+      forRef
     }
   }
 })

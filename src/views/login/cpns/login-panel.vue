@@ -42,10 +42,11 @@ export default defineComponent({
   components: { LoginAccount, LoginPhone },
   setup() {
     const isKeepPassword = ref(false)
-    const accountRef = ref()
+    const accountRef = ref<typeof LoginAccount>()
 
     const handleLoginClick = () => {
-      console.log('LOGIN', accountRef.value)
+      console.log('LOGIN', accountRef.value?.rules)
+      accountRef.value?.loginAction()
     }
     return { isKeepPassword, handleLoginClick, accountRef }
   }

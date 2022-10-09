@@ -23,6 +23,6 @@ export default defineComponent({
   align-items: center;
   width: 100%;
   height: 100%;
-  background: url('../../assets/img/loginbg.jpg');
+  background: url('../../assets/img/loginbg.jpg') no-repeat;
 }
 </style>
