@@ -1,8 +1,13 @@
 <template>
   <div class="login-panel">
     <h2 class="title">管理后台</h2>
-    <el-tabs type="border-card" class="demo-tabs" :stretch="true">
-      <el-tab-pane>
+    <el-tabs
+      type="border-card"
+      class="demo-tabs"
+      :stretch="true"
+      v-model="currentTab"
+    >
+      <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><User /></el-icon>
@@ -12,14 +17,14 @@
         <LoginAccount ref="accountRef" />
       </el-tab-pane>
 
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><Iphone /></el-icon>
             <span>手机登陆</span>
           </span>
         </template>
-        <LoginPhone />
+        <LoginPhone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
     <div class="account-control">
@@ -42,13 +47,25 @@ export default defineComponent({
   components: { LoginAccount, LoginPhone },
   setup() {
     const isKeepPassword = ref(false)
-    const accountRef = ref<typeof LoginAccount>()
-
+    // 声明accountRef的时候指定了类型限制 好处在于有更多的错误提示比如使用了不存在的方法
+    const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
+    const currentTab = ref('account')
     const handleLoginClick = () => {
-      console.log('LOGIN', accountRef.value?.rules)
-      accountRef.value?.loginAction()
+      // 因为accountRef有类型限制 所以使用的方法会被检测是否存在 这样是有好处的
+      if (currentTab.value === 'account') {
+        accountRef.value?.loginAction(isKeepPassword.value) //记住密码的开关传递到登陆组件里 来判断是否存储账号密码
+      } else {
+        console.log('phoneRef调用')
+      }
     }
-    return { isKeepPassword, handleLoginClick, accountRef }
+    return {
+      isKeepPassword,
+      handleLoginClick,
+      accountRef,
+      phoneRef,
+      currentTab
+    }
   }
 })
 </script>

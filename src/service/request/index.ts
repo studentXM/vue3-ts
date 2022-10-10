@@ -37,7 +37,6 @@ class HYRequest {
     // 全局--所有实例添加请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('全局请求拦截')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -55,7 +54,6 @@ class HYRequest {
     // 全局--所有实例添加响应拦截器
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('全局响应拦截')
         // 移除loading
         this.loading?.close()
         return res.data
