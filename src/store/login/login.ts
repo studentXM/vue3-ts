@@ -1,4 +1,5 @@
 import { Module } from 'vuex'
+import localCache from '@/utils/cache'
 import { accountLoginRequest, requestUserInfoById } from '@/service/login/login'
 
 import { IAccount } from '@/service/login/type'
@@ -25,6 +26,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       console.log(loginResult)
       const { id, token } = loginResult.data
       commit('changeToken', token)
+      localCache.setCache('token', token)
 
       //通过id再发送一次请求 获得具体用户信息
       const userInfoResult = await requestUserInfoById(id)

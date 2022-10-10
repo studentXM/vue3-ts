@@ -1,5 +1,5 @@
 class LocalCache {
-  setCache(key: string, value: any, isLocalStorage: boolean) {
+  setCache(key: string, value: any, isLocalStorage?: boolean) {
     if (isLocalStorage) {
       window.localStorage.setItem(key, JSON.stringify(value))
     } else {
@@ -7,10 +7,17 @@ class LocalCache {
     }
   }
 
-  getCache(key: string) {
-    const value = window.localStorage.getItem(key)
-    if (value) {
-      return JSON.parse(value)
+  getCache(key: string, isLocalStorage?: boolean) {
+    if (isLocalStorage) {
+      const value = window.localStorage.getItem(key)
+      if (value) {
+        return JSON.parse(value)
+      }
+    } else {
+      const value = window.sessionStorage.getItem(key)
+      if (value) {
+        return JSON.parse(value)
+      }
     }
   }
 
