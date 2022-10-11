@@ -55,3 +55,6 @@ vue3 中的组件ref属性和vue2中的一样 但是使用的时候 不能使用
 比如我们给一个ref值传入的是一个组件类型 那么就需要给 这个ref设置泛型 <InstanceType <typeof 组件对象>> 获取组件类型
 
 登陆接口 传入了泛型 之所以传入泛型 是因为 默认 请求下来的数据是一个unknow类型 不方便解构
+
+vue3 用volar
+vue2 用vutre  这两个插件会对template有影响

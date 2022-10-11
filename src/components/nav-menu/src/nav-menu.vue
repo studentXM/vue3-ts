@@ -8,12 +8,12 @@
       <el-menu default-active="2" class="el-menu-vertical">
         <template v-for="item in userMenus" :key="item.id">
           <template v-if="item.type === 1">
-            <el-sub-menu>
+            <el-sub-menu :index="item.id">
               <i v-if="item.icon" :class="item.icon"></i>
               <span>{{ item.name }}</span>
             </el-sub-menu>
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item>
+              <el-menu-item :index="subitem.id">
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
@@ -21,7 +21,7 @@
           </template>
 
           <template v-else-if="item.type === 2">
-            <el-menu-item>
+            <el-menu-item :index="item.id">
               <i v-if="item.icon" :class="item.icon"></i>
               <span>{{ item.name }}</span>
             </el-menu-item>
@@ -41,7 +41,7 @@ export default defineComponent({
     const userMenus = computed(() => {
       return store.state.login.userMenus
     })
-    // console.log(store)
+    console.log(userMenus)
     return {
       userMenus
     }
