@@ -1,6 +1,11 @@
 import { Module } from 'vuex'
 import localCache from '@/utils/cache'
-import { accountLoginRequest, requestUserInfoById } from '@/service/login/login'
+import router from '@/router'
+import {
+  accountLoginRequest,
+  requestUserInfoById,
+  requestUserMenusByRoleId
+} from '@/service/login/login'
 
 import { IAccount } from '@/service/login/type'
 import { ILoginState } from './types'
@@ -10,26 +15,62 @@ const loginModule: Module<ILoginState, IRootState> = {
   state() {
     return {
       token: '',
-      userInfo: {}
+      userInfo: {},
+      userMenus: []
     }
   },
   getters: {},
   mutations: {
     changeToken(state, token: string) {
       state.token = token
+    },
+    changeuserInfo(state, userInfo: any) {
+      state.userInfo = userInfo
+    },
+    changeUserMenus(state, userMenus: any) {
+      state.userMenus = userMenus
     }
   },
   actions: {
     async accountLoginAction({ commit }, payload: IAccount) {
       console.log(commit)
+      // 请求登陆
       const loginResult = await accountLoginRequest(payload)
-      console.log(loginResult)
       const { id, token } = loginResult.data
-      commit('changeToken', token)
-      localCache.setCache('token', token)
+      commit('changeToken', token) //vuex
+      localCache.setCache('token', token) // 存储
 
-      //通过id再发送一次请求 获得具体用户信息
+      //请求用户信息
       const userInfoResult = await requestUserInfoById(id)
+      const userInfo = userInfoResult.data
+      commit('changeuserInfo', userInfo)
+      localCache.setCache('userInfo', userInfo)
+
+      // 请求用户菜单
+      const userMenusResult = await requestUserMenusByRoleId(userInfo.role.id)
+      const userMenu = userMenusResult.data
+      commit('changeUserMenus', userMenu)
+      localCache.setCache('userMenu', userMenu)
+
+      // 跳转到首页
+      router.push('/main')
+    },
+
+    loadLocalLogin({ commit }) {
+      const token = localCache.getCache('token')
+      if (token) {
+        commit('changeToken', token)
+      }
+
+      const userInfo = localCache.getCache('userInfo')
+      if (userInfo) {
+        commit('changeuserInfo', userInfo)
+      }
+
+      const userMenus = localCache.getCache('userMenus')
+      if (userMenus) {
+        commit('changeUserMenus', userMenus)
+      }
     }
   }
 }

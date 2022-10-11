@@ -31,5 +31,6 @@ const hyRequest = new HYRequest({
     }
   }
 })
+export const weChat = new HYRequest({})
 // 导出实例
 export default hyRequest
