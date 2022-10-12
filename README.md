@@ -58,3 +58,14 @@ vue3 中的组件ref属性和vue2中的一样 但是使用的时候 不能使用
 
 vue3 用volar
 vue2 用vutre  这两个插件会对template有影响
+
+动态icon
+<el-icon
+                  ><component
+                    :is="item.icon.replace('el-icon-', '')"
+                    style="width: 16px; height: 16px"
+                  ></component
+                ></el-icon>
+
+使用compoent中得is属性来接受 icon得name值
+注意这里后台返回的字符需要截取一下 我们只用到el-icon 后面的值才会生效图标
