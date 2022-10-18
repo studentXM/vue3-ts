@@ -15,6 +15,7 @@ const routes: RouteRecordRaw[] = [
     path: '/main',
     name: 'main',
     component: () => import('@/views/main/main.vue')
+    // children: [] 这里需要根据usermenu来决定
   },
   {
     path: '/:pathMatch(.*)*',

@@ -10,6 +10,7 @@ import {
 import { IAccount } from '@/service/login/type'
 import { ILoginState } from './types'
 import { IRootState } from '../types'
+import { mapMenuToRoutes } from '@/utils/map-menus'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
@@ -27,8 +28,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     changeuserInfo(state, userInfo: any) {
       state.userInfo = userInfo
     },
+    // 如果刚登陆则取值 如果已经登陆然后刷新 那么从本地存储里面取值
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      //userMenus => routes
+      const routes = mapMenuToRoutes(userMenus)
     }
   },
   actions: {
