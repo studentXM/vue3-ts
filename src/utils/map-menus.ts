@@ -3,7 +3,6 @@ import { RouteRecordRaw } from 'vue-router'
 // 返回值是一个route类型
 export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
-  console.log(userMenus)
   // 先加载默认所有的routes 所有ts文件
   const allRoutes: RouteRecordRaw[] = []
   //递归取得该路径下的所有ts文件 以数组的方式存储
@@ -11,11 +10,12 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   //循环
   routeFiles.keys().forEach((key) => {
     // console.log(key) 显示的是所有ts在main下的路径 ./开头
-    // 引入文件 拼接路径 然后把这个模块对象push到 数组内
+    // 引入文件 拼接路径 然后把这个模块对象push到 数组内 引入所有的ts文件
     const route = require('../router/main' + key.split('.')[1])
+    // 引入所有的ts push到数组内
     allRoutes.push(route.default)
   })
-  console.log(allRoutes)
+  // console.log(allRoutes)
 
   //根据菜单获取需要添加的routes
 
@@ -37,6 +37,5 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   }
 
   _recurseGetRoute(userMenus)
-
   return routes
 }

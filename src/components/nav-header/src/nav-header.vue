@@ -4,7 +4,10 @@
       <Expand v-if="isFold" />
       <Fold v-else />
     </el-icon>
-    <span>header</span>
+    <div class="content">
+      <div>面包屑</div>
+      <div>用户信息</div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,9 @@ export default defineComponent({
   .el-icon {
     margin-right: 6px;
     cursor: pointer;
+  }
+  .content {
+    flex: 1;
   }
 }
 </style>

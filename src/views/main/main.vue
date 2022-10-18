@@ -8,7 +8,9 @@
         <el-header class="container-header">
           <NavHeader @foldChange="handleFoldChange" />
         </el-header>
-        <el-main class="container-main"> </el-main>
+        <el-main class="container-main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
