@@ -18,6 +18,7 @@ module.exports = {
     'vue/no-v-for-template-key': 'off',
     // 关闭组件驼峰名检测
     'vue/multi-word-component-names': 0,
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off'
   }
 }
