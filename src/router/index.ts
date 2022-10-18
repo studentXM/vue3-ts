@@ -1,4 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { mapMenuToRoutes } from '@/utils/map-menus'
+import store from '@/store'
 import localCache from '@/utils/cache'
 import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
@@ -37,6 +39,15 @@ router.beforeEach((to) => {
       return '/login'
     }
   }
+  // useStore只能在组件内使用 compositionApi内
+  const userMenus = (store.state as any).login.userMenus
+  //userMenus => routes
+  const routes = mapMenuToRoutes(userMenus)
+  //将routes
+  routes.forEach((route) => {
+    // 给main添加子路由
+    router.addRoute('main', route)
+  })
 })
 
 export default router

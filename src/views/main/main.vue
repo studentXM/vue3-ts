@@ -9,7 +9,9 @@
           <NavHeader @foldChange="handleFoldChange" />
         </el-header>
         <el-main class="container-main">
-          <router-view></router-view>
+          <div class="page-info">
+            <router-view></router-view>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -68,8 +70,13 @@ export default defineComponent({
       }
       // 内容区
       .container-main {
+        padding: 8px;
         text-align: center;
         background: #f4f4f4ad;
+        .page-info {
+          background: #fff;
+          border-radius: 5px;
+        }
       }
     }
   }

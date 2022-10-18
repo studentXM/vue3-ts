@@ -31,13 +31,13 @@ const loginModule: Module<ILoginState, IRootState> = {
     // 如果刚登陆则取值 如果已经登陆然后刷新 那么从本地存储里面取值
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-      //userMenus => routes
-      const routes = mapMenuToRoutes(userMenus)
-
-      //将routes
-      routes.forEach((route) => {
-        router.addRoute('main', route)
-      })
+      // //userMenus => routes
+      // const routes = mapMenuToRoutes(userMenus)
+      // //将routes
+      // routes.forEach((route) => {
+      //   // 给main添加子路由
+      //   router.addRoute('main', route)
+      // })
     }
   },
   actions: {
