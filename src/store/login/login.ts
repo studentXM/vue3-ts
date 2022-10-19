@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 import localCache from '@/utils/cache'
+// 引入我们的路由对象 添加动态路由
 import router from '@/router'
 import {
   accountLoginRequest,

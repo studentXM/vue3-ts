@@ -18,18 +18,26 @@
     </el-dropdown>
   </div>
 </template>
-<script setup lang="ts">
-import { reactive, toRefs, computed } from 'vue'
+<script lang="ts">
+import { reactive, toRefs, computed, defineComponent } from 'vue'
 import { useStore } from '@/store'
-const state = reactive({
-  circleUrl:
-    'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+export default defineComponent({
+  setup() {
+    const state = reactive({
+      circleUrl:
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+    })
+    const store = useStore()
+    const name = computed(() => {
+      return store.state.login.userInfo.name
+    })
+    const { circleUrl } = toRefs(state)
+    return {
+      name,
+      circleUrl
+    }
+  }
 })
-const store = useStore()
-const name = computed(() => {
-  return store.state.login.userInfo.name
-})
-const { circleUrl } = toRefs(state)
 </script>
 <style scoped lang="less">
 .user-info {

@@ -1,5 +1,8 @@
 // 从vuerouter导出一个类型
 import { RouteRecordRaw } from 'vue-router'
+
+let firstMenu: any = null
+
 // 返回值是一个route类型
 export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -28,7 +31,14 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
           return route.path === menu.url
         })
         // 若有值 push到routes
-        if (route) routes.push(route)
+        if (route) {
+          routes.push(route)
+          // 保存当前的路由 这会是我们的第一个存在的路由 保存起来做重定向
+          if (!firstMenu) {
+            firstMenu = menu
+          }
+        }
+
         //type为1 代表为父级 所以进行递归调用
       } else {
         _recurseGetRoute(menu.children)
@@ -39,3 +49,19 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   _recurseGetRoute(userMenus)
   return routes
 }
+
+// 根据当前路由的路径 来对应导航菜单的高亮显示
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const path = pathMapToMenu(menu.children, currentPath)
+      if (path) {
+        return path
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }

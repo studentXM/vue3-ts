@@ -6,7 +6,7 @@
     </div>
     <div>
       <el-menu
-        default-active="2"
+        :default-active="defaultValue"
         active-text-color="#409eff"
         class="el-menu-vertical"
         :unique-opened="true"
@@ -53,9 +53,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { pathMapToMenu } from '@/utils/map-menus'
 export default defineComponent({
   props: {
     collapse: {
@@ -64,13 +65,22 @@ export default defineComponent({
     }
   },
   setup() {
+    // 取得vuex
     const store = useStore()
+    // 取得vuex内的菜单列表
     const userMenus = computed(() => {
       return store.state.login.userMenus
     })
 
     const router = useRouter()
+    const route = useRoute()
+    const currentPath = route.path
+    console.log(userMenus.value)
+    // data
+    const menu = pathMapToMenu(userMenus.value, currentPath)
+    const defaultValue = ref(menu.id + '')
 
+    // 菜单导航点击事件
     const handleMenuItemClick = (item: any) => {
       console.log(item)
       router.push({
@@ -79,7 +89,8 @@ export default defineComponent({
     }
     return {
       userMenus,
-      handleMenuItemClick
+      handleMenuItemClick,
+      defaultValue
     }
   }
 })

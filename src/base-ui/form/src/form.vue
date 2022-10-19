@@ -3,8 +3,8 @@
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <el-col :span="8">
-            <el-form-item :label="item.label">
+          <el-col v-bind:="colLayout">
+            <el-form-item :label="item.label" :style="itemStyle">
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
@@ -15,6 +15,7 @@
                   <el-option
                     v-for="(option, index) in item.options"
                     :key="index"
+                    :value="option.value"
                     >{{ option.title }}</el-option
                   >
                 </el-select>
@@ -46,6 +47,22 @@ export default defineComponent({
     labelWidth: {
       type: String,
       default: '100px'
+    },
+    itemStyle: {
+      type: Object,
+      default: () => ({ padding: '10px 40px' })
+    },
+    //elementPlus的栅格响应式属性 根据不同分辨率的 栅格占比
+    // 可以外部决定 栅格占比
+    colLayout: {
+      type: Object,
+      default: () => ({
+        xl: 6,
+        lg: 8,
+        md: 12,
+        sm: 24,
+        xs: 24
+      })
     }
   },
 
@@ -58,9 +75,8 @@ export default defineComponent({
 <style scoped lang="less">
 .hy-form {
   padding-top: 22px;
-  .form-item {
-    padding: 5px 30px;
-    background: red;
+  .el-select {
+    width: 100%;
   }
 }
 </style>
