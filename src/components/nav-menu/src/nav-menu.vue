@@ -75,14 +75,12 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const currentPath = route.path
-    console.log(userMenus.value)
     // data
     const menu = pathMapToMenu(userMenus.value, currentPath)
     const defaultValue = ref(menu.id + '')
 
     // 菜单导航点击事件
     const handleMenuItemClick = (item: any) => {
-      console.log(item)
       router.push({
         path: item.url ?? '/not-found'
       })

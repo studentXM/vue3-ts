@@ -1,3 +1,4 @@
+import { IBreadcrumb } from './../base-ui/breadcurmb/types/index'
 // 从vuerouter导出一个类型
 import { RouteRecordRaw } from 'vue-router'
 
@@ -50,12 +51,28 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
+// 根据当前路由的路径 返回面包屑
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string): any {
+  const breadcrumbs: IBreadcrumb[] = []
+  pathMapToMenu(userMenus, currentPath, breadcrumbs)
+  return breadcrumbs
+}
+
 // 根据当前路由的路径 来对应导航菜单的高亮显示
-export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
   for (const menu of userMenus) {
     if (menu.type === 1) {
       const path = pathMapToMenu(menu.children, currentPath)
       if (path) {
+        // breadcrumbs?.push({ name: menu.name, path: menu.url })
+        // breadcrumbs?.push({ name: path.name, path: path.url })
+        // 不需要路径 因为当前不需要面包屑跳转
+        breadcrumbs?.push({ name: menu.name })
+        breadcrumbs?.push({ name: path.name })
         return path
       }
     } else if (menu.type === 2 && menu.url === currentPath) {

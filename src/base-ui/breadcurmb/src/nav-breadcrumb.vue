@@ -1,7 +1,11 @@
 <template>
   <div class="nav-breadcrumb">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+      <template v-for="item in breadcrumbds" :key="item.name">
+        <el-breadcrumb-item :to="{ path: item.path }">{{
+          item.name
+        }}</el-breadcrumb-item>
+      </template>
     </el-breadcrumb>
   </div>
 </template>

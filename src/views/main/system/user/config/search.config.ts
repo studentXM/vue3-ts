@@ -2,24 +2,28 @@ import { IForm } from '@/base-ui/form/index'
 export const searchFormConfig: IForm = {
   formItems: [
     {
+      fieLd: 'id',
       type: 'input',
       label: '张三',
       rules: [],
       placeholder: '测试'
     },
     {
+      fieLd: 'name',
       type: 'input',
-      label: '张三的id',
+      label: '张三的name',
       rules: [],
       placeholder: '测试'
     },
     {
+      fieLd: 'password',
       type: 'password',
       label: '张三的密码',
       rules: [],
       placeholder: '测试'
     },
     {
+      fieLd: 'sport',
       type: 'select',
       label: '张三的运动',
       rules: [],
@@ -30,6 +34,7 @@ export const searchFormConfig: IForm = {
       ]
     },
     {
+      fieLd: 'createTime',
       type: 'datepicker',
       label: '创建时间',
       otherOptions: {
