@@ -49,6 +49,7 @@ export default defineComponent({
 .header {
   display: flex;
   align-items: center;
+  width: 100%;
   .el-icon {
     margin-right: 6px;
     cursor: pointer;

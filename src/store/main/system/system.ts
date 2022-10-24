@@ -15,6 +15,9 @@ const systemModule: Module<ISystemState, IRootState> = {
   mutations: {
     changeuserList(state, userList: any[]) {
       state.userList = userList
+    },
+    changeuserCount(state, userCount: number) {
+      state.userCount = userCount
     }
   },
   actions: {
@@ -26,6 +29,8 @@ const systemModule: Module<ISystemState, IRootState> = {
         payload.queryInfo
       )
       const { list, totalCount } = pageResult.data
+      commit('changeuserList', list)
+      commit('changeuserCount', totalCount)
     }
   }
 }
