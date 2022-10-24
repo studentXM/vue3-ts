@@ -88,3 +88,6 @@ setup函数声明两个形参 一个是 props 一个是 上下文对象 这个�
 
 watch（数据名，回调函数（最新值））在watch回调函数内我们
 子组件内声明一个事件[‘update：modelValue’] 这个事件是是固定的 这样才能和外面父组件的v-model对应
+
+关于template中的scope其实就是作用域插槽接收的值
+#default是element的table标签的一个 name名 然后我们使用了 scope接收 但是这个scope不能直接输出到页面，而是只能输出它的row 

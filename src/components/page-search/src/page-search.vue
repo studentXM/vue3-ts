@@ -45,4 +45,10 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.footerdiv {
+  display: flex;
+  justify-content: right;
+  padding: 10px 30px 20px 0px;
+}
+</style>

@@ -55,6 +55,8 @@ export default defineComponent({
     .container-content {
       // 头部
       .container-header {
+        display: flex;
+        align-items: center;
         line-height: 60px;
         height: 60px;
         background: #fff;

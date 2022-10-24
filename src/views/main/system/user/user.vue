@@ -1,20 +1,28 @@
 <template>
   <div class="user">
     <PageSearch :searchFormConfig="searchFormConfig" />
-    <div class="content"></div>
+    <div class="content">
+      <hy-table :listData="userList" :propList="propList">
+        <template #status="scope">
+          <el-button>{{ scope.row.enable }}</el-button>
+        </template>
+      </hy-table>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store'
 import { searchFormConfig } from './config/search.config'
 import PageSearch from '@/components/page-search'
+import HyTable from '@/base-ui/table'
 export default defineComponent({
   name: 'user',
-  components: { PageSearch },
+  components: { PageSearch, HyTable },
   setup() {
     const store = useStore()
+    // vuex actions 里的方法
     store.dispatch('system/getPageListAction', {
       pageUrl: '/users/list',
       queryInfo: {
@@ -22,7 +30,39 @@ export default defineComponent({
         size: 10
       }
     })
-    return { searchFormConfig }
+
+    const userList = computed(() => store.state.system.userList)
+    const userCount = computed(() => store.state.system.userCount)
+
+    const propList = [
+      { prop: 'name', label: '用户名', minWidth: '100', slotName: 'name' },
+      {
+        prop: 'realname',
+        label: '真实姓名',
+        minWidth: '100',
+        slotName: 'realname'
+      },
+      {
+        prop: 'cellphone',
+        label: '电话号码',
+        minWidth: '120',
+        slotName: 'cellphone'
+      },
+      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
+      {
+        prop: 'createAt',
+        label: '创建时间',
+        minWidth: '250',
+        slotName: 'createAt'
+      },
+      {
+        prop: 'updateAt',
+        label: '更新时间',
+        minWidth: '250',
+        slotName: 'updateAt'
+      }
+    ]
+    return { searchFormConfig, userList, userCount, propList }
   }
 })
 </script>
@@ -31,5 +71,9 @@ export default defineComponent({
 .footerdiv {
   text-align: right;
   padding: 0 50px 22px 0;
+}
+.content {
+  border-top: 10px #f4f4f4ad solid;
+  padding: 20px;
 }
 </style>
