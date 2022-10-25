@@ -5,7 +5,7 @@
       <hy-form v-bind="searchFormConfig" v-model="formData">
         <!-- 具名插槽 -->
         <template #header>
-          <!-- <div>检索</div> -->
+          <div>检索</div>
         </template>
         <template #footer>
           <div class="footerdiv">
@@ -49,6 +49,6 @@ export default defineComponent({
 .footerdiv {
   display: flex;
   justify-content: right;
-  padding: 10px 30px 20px 0px;
+  padding: 10px 20px 20px 0px;
 }
 </style>

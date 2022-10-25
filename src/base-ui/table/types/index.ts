@@ -3,4 +3,5 @@ export interface propListType {
   label: string
   minWidth?: string
   slotName?: string
+  id?: string
 }

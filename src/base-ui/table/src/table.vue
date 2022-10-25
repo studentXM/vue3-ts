@@ -1,6 +1,34 @@
 <template>
-  <div>
-    <el-table :data="listData" border style="width: 100%">
+  <div class="hy-table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectChange"
+    >
+      <!-- 显示 选中按钮s -->
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="40"
+      ></el-table-column>
+      <!-- 显示 ID -->
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+        width="80"
+      ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
         <!-- el-table-column 可以传入插槽 -->
         <el-table-column v-bind="propItem" align="center">
@@ -9,12 +37,31 @@
           <template #default="scope">
             <!-- scope有当前列表的列数id 以及所有的信息 -->
             <slot :name="propItem.slotName" :row="scope.row">
-              {{ propItem.prop }}
+              {{ scope.row[propItem.prop] }}
             </slot>
           </template>
         </el-table-column>
       </template>
     </el-table>
+    <div class="footer">
+      <slot name="footer">
+        <div class="demo-pagination-block">
+          <div class="demonstration"></div>
+          <el-pagination
+            v-model:currentPage="currentPage4"
+            v-model:page-size="pageSize4"
+            :page-sizes="[100, 200, 300, 400]"
+            :small="small"
+            :disabled="disabled"
+            :background="background"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -24,6 +71,10 @@ import { propListType } from '../types/index'
 
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     listData: {
       type: Array,
       required: true
@@ -31,12 +82,39 @@ export default defineComponent({
     propList: {
       type: Array as PropType<propListType[]>,
       require: true
+    },
+    // 是否显示序号
+    showIndexColumn: {
+      type: Boolean,
+      default: false
+    },
+    // 是否显示选中按钮
+    showSelectColumn: {
+      type: Boolean,
+      default: false
     }
   },
-  setup() {
-    return {}
+  emits: ['selectionChange'],
+  setup(props, { emit }) {
+    const handleSelectChange = (v: any) => {
+      // 把选中的数据 发送给父组件
+      emit('selectionChange', v)
+    }
+    return { handleSelectChange }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+.footer {
+  padding-top: 10px;
+  display: flex;
+  justify-content: right;
+}
+</style>
