@@ -1,25 +1,40 @@
 <template>
   <div class="role">
-    <PageContent
-      :contentTableConfig="contentTableConfig"
-      pageName="role"
-    ></PageContent>
+    <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
+    <div class="content">
+      <PageContent
+        :contentTableConfig="contentTableConfig"
+        pageName="role"
+      ></PageContent>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
+import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
+
 import { contentTableConfig } from './config/content.config'
+import { searchFormConfig } from './config/search.config'
 export default defineComponent({
   name: 'role',
   components: {
-    PageContent
+    PageContent,
+    PageSearch
   },
   setup() {
-    return { contentTableConfig }
+    return { contentTableConfig, searchFormConfig }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.content {
+  border-top: 10px solid #f4f4f4ad;
+  padding: 0 20px 10px 20px;
+}
+.role {
+}
+</style>

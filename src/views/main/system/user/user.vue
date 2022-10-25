@@ -1,7 +1,9 @@
 <template>
   <div class="user">
+    <!-- 搜索组件 传递的是 也是显示内容配置 -->
     <PageSearch :searchFormConfig="searchFormConfig" />
     <div class="content">
+      <!-- Table组件 传递的是table渲染的prop对象等属性 pageName是用来区分请求的  -->
       <PageContent
         :contentTableConfig="contentTableConfig"
         pageName="users"

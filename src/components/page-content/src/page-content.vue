@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <hy-table :listData="userList" v-bind="contentTableConfig">
+    <hy-table :listData="dataList" v-bind="contentTableConfig">
       <template #headerHandler>
         <el-button type="primary">新建用户</el-button>
         <el-button
@@ -61,13 +61,13 @@ export default defineComponent({
       }
     })
     const { proxy }: any = getCurrentInstance()
-    const userList = computed(() =>
+    const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
     // const userCount = computed(() => store.state.system.userCount)
 
     // 接收选中
-    return { proxy, userList }
+    return { proxy, dataList }
   }
 })
 </script>

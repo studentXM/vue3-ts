@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img src="~@/assets/img/log.png" alt="" class="logoimg" />
-      <span v-if="!collapse">xinmuSystem</span>
+      <span v-if="!collapse">xSystem</span>
     </div>
     <div>
       <el-menu
@@ -100,13 +100,18 @@ export default defineComponent({
     // color: white;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    padding: 10px;
+    height: 40px;
+    background: #fff;
     span {
       font-size: 22px;
       font-weight: 200;
     }
     .logoimg {
-      width: 30%;
+      // flex: 0.7;
+      width: 20px;
+      margin-right: 5px;
     }
   }
   .tac {

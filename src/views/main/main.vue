@@ -50,7 +50,7 @@ export default defineComponent({
     .container-aside {
       transition: width 300ms;
       height: 100%;
-      // background: rgb(70, 70, 70);
+      border-right: 1px solid #efefef;
     }
     .container-content {
       // 头部
@@ -60,7 +60,7 @@ export default defineComponent({
         line-height: 60px;
         height: 60px;
         background: #fff;
-        box-shadow: 2px -1px 5px 1px rgb(223, 223, 223);
+        border-bottom: 1px solid #efefef;
         .header-left {
           display: flex;
           align-items: center;

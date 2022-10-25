@@ -19,10 +19,10 @@ const systemModule: Module<ISystemState, IRootState> = {
     }
   },
   mutations: {
-    changeuserList(state, userList: any[]) {
+    changeusersList(state, userList: any[]) {
       state.userList = userList
     },
-    changeuserCount(state, userCount: number) {
+    changeusersCount(state, userCount: number) {
       state.userCount = userCount
     },
     // 小写
@@ -38,7 +38,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListData(state) {
       return (pageName: string) => {
         switch (pageName) {
-          case 'user':
+          case 'users':
             return state.userList
             break
           case 'role':
@@ -52,21 +52,25 @@ const systemModule: Module<ISystemState, IRootState> = {
     async getPageListAction({ commit }, payload: any) {
       console.log(payload)
       // 获取url
-      let url = ''
+      // let url = ''
       const { pageUrl } = payload
-      switch (pageUrl) {
-        case 'users':
-          url = '/users/list'
-          break
-        case 'role':
-          url = '/role/list'
-          break
-      }
+      // 方法1：取得组件传递的url类型 拼接后缀发送请求
+      const url = `/${payload.pageUrl}/list`
+      // 放法2：判断payload.pageUrl的值 修改url发送请求
+      // switch (pageUrl) {
+      //   case 'users':
+      //     url = '/users/list'
+      //     break
+      //   case 'role':
+      //     url = '/role/list'
+      //     break
+      // }
       //   发送请求
       const pageResult = await getPageListData(url, payload.queryInfo)
 
       // 将数据存储到vuex中
       const { list, totalCount } = pageResult.data
+      // 拼接变量 动态的调用存储函数
       commit(`change${pageUrl}List`, list)
       commit(`change${pageUrl}Count`, totalCount)
     }
