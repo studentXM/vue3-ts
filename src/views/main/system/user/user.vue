@@ -2,67 +2,32 @@
   <div class="user">
     <PageSearch :searchFormConfig="searchFormConfig" />
     <div class="content">
-      <hy-table :listData="userList" :propList="propList">
-        <template #status="scope">
-          <el-button>{{ scope.row.enable }}</el-button>
-        </template>
-      </hy-table>
+      <PageContent
+        :contentTableConfig="contentTableConfig"
+        pageName="users"
+      ></PageContent>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useStore } from '@/store'
+import { defineComponent } from 'vue'
 import { searchFormConfig } from './config/search.config'
+import { contentTableConfig } from './config/content.config'
 import PageSearch from '@/components/page-search'
-import HyTable from '@/base-ui/table'
+import PageContent from '@/components/page-content'
 export default defineComponent({
   name: 'user',
-  components: { PageSearch, HyTable },
+  components: { PageSearch, PageContent },
   setup() {
-    const store = useStore()
-    // vuex actions 里的方法
-    store.dispatch('system/getPageListAction', {
-      pageUrl: '/users/list',
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
-
-    const userList = computed(() => store.state.system.userList)
-    const userCount = computed(() => store.state.system.userCount)
-
-    const propList = [
-      { prop: 'name', label: '用户名', minWidth: '100', slotName: 'name' },
-      {
-        prop: 'realname',
-        label: '真实姓名',
-        minWidth: '100',
-        slotName: 'realname'
-      },
-      {
-        prop: 'cellphone',
-        label: '电话号码',
-        minWidth: '120',
-        slotName: 'cellphone'
-      },
-      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
-      {
-        prop: 'createAt',
-        label: '创建时间',
-        minWidth: '250',
-        slotName: 'createAt'
-      },
-      {
-        prop: 'updateAt',
-        label: '更新时间',
-        minWidth: '250',
-        slotName: 'updateAt'
-      }
-    ]
-    return { searchFormConfig, userList, userCount, propList }
+    const showSelect = (v: any) => {
+      console.log(v)
+    }
+    return {
+      contentTableConfig,
+      searchFormConfig,
+      showSelect
+    }
   }
 })
 </script>
@@ -74,6 +39,6 @@ export default defineComponent({
 }
 .content {
   border-top: 10px #f4f4f4ad solid;
-  padding: 20px;
+  padding: 0px 20px 10px 20px;
 }
 </style>

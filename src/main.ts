@@ -9,14 +9,15 @@ import './assets/css/index.less'
 // import Request from './service'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+// 全局的一些方法
+import { globalRegister } from '@/global/index'
 const app = createApp(App)
 app.use(store)
 // 刷新以后vuex的数据将丢失 重新从缓存当中取值 然后赋值给vuex
 // setupStore 会添加从后台返回的路由 所以需要在router路由绑定之前调用
 setupStore()
 app.use(router)
-
+app.use(globalRegister)
 app.mount('#app')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

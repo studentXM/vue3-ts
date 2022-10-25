@@ -49,6 +49,6 @@ export default defineComponent({
 .footerdiv {
   display: flex;
   justify-content: right;
-  padding: 10px 30px 20px 0px;
+  padding: 10px 20px 20px 0px;
 }
 </style>
