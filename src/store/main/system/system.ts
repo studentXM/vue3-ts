@@ -12,18 +12,18 @@ const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
   state() {
     return {
-      userList: [],
-      userCount: 0,
+      usersList: [],
+      usersCount: 0,
       roleList: [],
       roleCount: 0
     }
   },
   mutations: {
     changeusersList(state, userList: any[]) {
-      state.userList = userList
+      state.usersList = userList
     },
     changeusersCount(state, userCount: number) {
-      state.userCount = userCount
+      state.usersCount = userCount
     },
     // 小写
     changeroleList(state, list: any[]) {
@@ -40,7 +40,8 @@ const systemModule: Module<ISystemState, IRootState> = {
         // 这里的state[变量拼接字符串]在ts里需要给 state一个类型指定 所以用到了as (类型断言)
         const listData: any[] =
           // 这里需要把state断言成any
-          (state as any)[`${pageName as string}list`] ?? []
+          (state as any)[`${pageName}List`] ?? []
+        console.log(pageName)
         return listData
       }
     },
@@ -48,7 +49,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       return (pageName: string) => {
         switch (pageName) {
           case 'users':
-            return state.userCount
+            return state.usersCount
             break
           case 'role':
             return state.roleCount

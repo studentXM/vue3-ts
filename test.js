@@ -26,5 +26,4 @@ function tree(arr) {
   })
   return result
 }
-
 console.log(tree(arr))

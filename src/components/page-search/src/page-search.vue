@@ -48,8 +48,11 @@ export default defineComponent({
 
     // 当用户点击重置
     const handleResetClick = () => {
-      console.log(formOriginData)
-      formData.value = formOriginData
+      // value是一个对象 把对象里面的属性一个一个 赋值保证响应式
+      for (const key in formOriginData) {
+        formData.value[`${key}`] = formOriginData[key]
+      }
+      console.log(formData.value)
     }
     return { formData, handleResetClick }
   }

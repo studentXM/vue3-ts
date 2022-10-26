@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, watch, computed } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { IFormItem } from '../types'
 
 export default defineComponent({
@@ -85,13 +85,8 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     // 父子组件实现双向绑定 并且符合单向数据流 这里需要把原来的对象结构出来 相当于浅拷贝一份
-    const formData = computed(() => ({ ...props.modelValue }))
+    const formData = ref({ ...props.modelValue })
     // 监听数据变化 再把当前数据发送到父组件中
-    // 深度监听formData中的数据 》》通过组件的v-model属性子传父亲
-
-    // watch(props.modelValue, (newValue) => {
-
-    // })
     watch(
       formData,
       (newValue) => {
