@@ -52,14 +52,18 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    // vuex actions 里的方法
-    store.dispatch('system/getPageListAction', {
-      pageUrl: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
+    // vuex actions 里的方法 网络请求table
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch('system/getPageListAction', {
+        pageUrl: props.pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...queryInfo
+        }
+      })
+    }
+    getPageData()
     const { proxy }: any = getCurrentInstance()
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
@@ -67,7 +71,7 @@ export default defineComponent({
     // const userCount = computed(() => store.state.system.userCount)
 
     // 接收选中
-    return { proxy, dataList }
+    return { proxy, dataList, getPageData }
   }
 })
 </script>

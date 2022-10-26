@@ -12,7 +12,9 @@
             <el-button type="primary" icon="refresh" @click="handleResetClick"
               >重置</el-button
             >
-            <el-button type="primary" icon="search">搜索</el-button>
+            <el-button type="primary" icon="search" @click="handleQueryClick"
+              >搜索</el-button
+            >
           </div>
         </template>
       </hy-form>
@@ -34,7 +36,8 @@ export default defineComponent({
   components: {
     HyForm
   },
-  setup(props) {
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
     // 双向绑定的属性应该是由配置文件的field决定的
     // 因为表单需要变量接收实现双向绑定 但是我们的表单是组件 是动态决定显示表单类型的
     // 所以我们的变量也是动态对应表单的 所以动态的把配置文件中的类型取出来做 我们的变量
@@ -46,15 +49,23 @@ export default defineComponent({
     }
     const formData = ref(formOriginData)
 
-    // 当用户点击重置
+    //优化2 当用户点击重置
     const handleResetClick = () => {
       // value是一个对象 把对象里面的属性一个一个 赋值保证响应式
       for (const key in formOriginData) {
         formData.value[`${key}`] = formOriginData[key]
       }
+      // 重置以后发送事件给父组件
+      emit('resetBtnClick')
       console.log(formData.value)
     }
-    return { formData, handleResetClick }
+
+    // 优化3
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
+    }
+
+    return { formData, handleResetClick, handleQueryClick }
   }
 })
 </script>

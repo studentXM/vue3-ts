@@ -6,35 +6,42 @@ export const searchFormConfig: IForm = {
       type: 'input',
       label: '张三',
       rules: [],
-      placeholder: '测试'
+      placeholder: 'ID'
     },
     {
       fieLd: 'name',
       type: 'input',
-      label: '张三的name',
+      label: '用户名',
       rules: [],
-      placeholder: '测试'
+      placeholder: '请输入用户名'
     },
     {
-      fieLd: 'password',
-      type: 'password',
-      label: '张三的密码',
+      fieLd: 'realname',
+      type: 'input',
+      label: '真实姓名',
       rules: [],
-      placeholder: '测试'
+      placeholder: '请输入真实姓名'
     },
     {
-      fieLd: 'sport',
+      fieLd: 'cellphone',
+      type: 'input',
+      label: '手机号码',
+      rules: [],
+      placeholder: '请输入手机号'
+    },
+    {
+      fieLd: 'enable',
       type: 'select',
-      label: '张三的运动',
+      label: '用户状态',
       rules: [],
-      placeholder: '测试',
+      placeholder: '选择状态',
       options: [
-        { title: '足球', value: 'football' },
-        { title: '游戏', value: 'game' }
+        { title: '启用', value: 1 },
+        { title: '禁用', value: 0 }
       ]
     },
     {
-      fieLd: 'createTime',
+      fieLd: 'createAt',
       type: 'datepicker',
       label: '创建时间',
       otherOptions: {
