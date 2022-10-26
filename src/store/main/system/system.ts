@@ -37,12 +37,21 @@ const systemModule: Module<ISystemState, IRootState> = {
     // 根据url 来返回对应的list数据 给table组件
     pageListData(state) {
       return (pageName: string) => {
+        // 这里的state[变量拼接字符串]在ts里需要给 state一个类型指定 所以用到了as (类型断言)
+        const listData: any[] =
+          // 这里需要把state断言成any
+          (state as any)[`${pageName as string}list`] ?? []
+        return listData
+      }
+    },
+    pageListDataCount(state) {
+      return (pageName: string) => {
         switch (pageName) {
           case 'users':
-            return state.userList
+            return state.userCount
             break
           case 'role':
-            return state.roleList
+            return state.roleCount
             break
         }
       }

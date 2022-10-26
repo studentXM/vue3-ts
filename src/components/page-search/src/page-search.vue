@@ -9,7 +9,9 @@
         </template>
         <template #footer>
           <div class="footerdiv">
-            <el-button type="primary" icon="refresh">重置</el-button>
+            <el-button type="primary" icon="refresh" @click="handleResetClick"
+              >重置</el-button
+            >
             <el-button type="primary" icon="search">搜索</el-button>
           </div>
         </template>
@@ -32,15 +34,24 @@ export default defineComponent({
   components: {
     HyForm
   },
-  setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      soprt: '',
-      createTime: ''
-    })
-    return { formData }
+  setup(props) {
+    // 双向绑定的属性应该是由配置文件的field决定的
+    // 因为表单需要变量接收实现双向绑定 但是我们的表单是组件 是动态决定显示表单类型的
+    // 所以我们的变量也是动态对应表单的 所以动态的把配置文件中的类型取出来做 我们的变量
+    //优化1 总结=》form双向绑定的变量 动态的与searchFormConfig中的类型fieLd对应 这样不会多出变量而且 也符合配置思想
+    const formItems = (props.searchFormConfig as any).formItems ?? []
+    const formOriginData: any = {}
+    for (const item of formItems) {
+      formOriginData[item.fieLd] = ''
+    }
+    const formData = ref(formOriginData)
+
+    // 当用户点击重置
+    const handleResetClick = () => {
+      console.log(formOriginData)
+      formData.value = formOriginData
+    }
+    return { formData, handleResetClick }
   }
 })
 </script>
