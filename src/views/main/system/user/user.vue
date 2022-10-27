@@ -9,7 +9,7 @@
     <div class="content">
       <!-- Table组件 传递的是table渲染的prop对象等属性 pageName是用来区分请求的  -->
       <PageContent
-        ref="pageContentRef"
+        ref="PageContentRef"
         :contentTableConfig="contentTableConfig"
         pageName="users"
       ></PageContent>
@@ -18,31 +18,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { searchFormConfig } from './config/search.config'
 import { contentTableConfig } from './config/content.config'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
+
+// 引入hook
+import { usePageSearch } from '@/hooks/use-page-search'
 export default defineComponent({
   name: 'user',
   components: { PageSearch, PageContent },
   setup() {
-    // ts获取组件实例的方式 变量名称要和 ref的值对应
-    const pageContentRef = ref<InstanceType<typeof PageContent>>()
-    const handleResetClick = () => {
-      pageContentRef.value?.getPageData()
-    }
-    const handlequeryClick = (queryInfo: any) => {
-      console.log(pageContentRef.value)
-      pageContentRef.value?.getPageData(queryInfo)
-    }
-    console.log(pageContentRef)
+    const [PageContentRef, handleResetClick, handlequeryClick] = usePageSearch()
     return {
       contentTableConfig,
       searchFormConfig,
       handleResetClick,
       handlequeryClick,
-      pageContentRef
+      PageContentRef
     }
   }
 })

@@ -92,3 +92,12 @@ watch（数据名，回调函数（最新值））在watch回调函数内我们
 
 关于template中的scope其实就是作用域插槽接收的值
 #default是element的table标签的一个 name名 然后我们使用了 scope接收 但是这个scope不能直接输出到页面，而是只能输出它的row 
+
+
+<!-- 关于usePageSearch hook的报红 -->
+
+  return [PageContentRef, handleResetClick, handlequeryClick]
+  这个hook 返回的类型是三个不一样的 但是返回三个一样的类型就不会爆红 
+  解决方法：
+  给这个hook函数一个返回类型 ：any 或者 ：any[]
+  

@@ -48,14 +48,14 @@
         <div class="demo-pagination-block">
           <div class="demonstration"></div>
           <el-pagination
-            v-model:currentPage="currentPage4"
-            v-model:page-size="pageSize4"
-            :page-sizes="[100, 200, 300, 400]"
+            :currentPage="page.current"
+            :page-size="page.size"
+            :page-sizes="[10, 20, 30]"
             :small="small"
             :disabled="disabled"
             :background="background"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
+            :total="listCount"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
@@ -79,6 +79,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      defalut: 0
+    },
     propList: {
       type: Array as PropType<propListType[]>,
       require: true
@@ -92,15 +96,32 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => {
+        return { currentPage: 0, pageSize: 10 }
+      }
     }
   },
-  emits: ['selectionChange'],
+  emits: ['selectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectChange = (v: any) => {
       // 把选中的数据 发送给父组件
       emit('selectionChange', v)
     }
-    return { handleSelectChange }
+
+    const handleSizeChange = (pageSize: number) => {
+      // 因为双向绑定的是一个对象 我们传递回去的值也是个对象 那么则结构里面的属性 修改我们发生变化的属性
+      emit('update:page', { ...props.page, pageSize })
+      console.log(pageSize)
+    }
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage: currentPage - 1 }) // currentPage是事件函数传递的数值 默认是1 但是我们用到了偏移 所以默认得是0
+      console.log(currentPage)
+    }
+
+    return { handleSelectChange, handleSizeChange, handleCurrentChange }
   }
 })
 </script>

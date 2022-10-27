@@ -5,6 +5,7 @@
       <PageContent
         :contentTableConfig="contentTableConfig"
         pageName="role"
+        ref="PageContentRef"
       ></PageContent>
     </div>
   </div>
@@ -18,6 +19,10 @@ import PageContent from '@/components/page-content'
 
 import { contentTableConfig } from './config/content.config'
 import { searchFormConfig } from './config/search.config'
+
+// 引入hook
+import { usePageSearch } from '@/hooks/use-page-search'
+
 export default defineComponent({
   name: 'role',
   components: {
@@ -25,7 +30,16 @@ export default defineComponent({
     PageSearch
   },
   setup() {
-    return { contentTableConfig, searchFormConfig }
+    // 结构函数返回的数组 里面是PageContent的对应的方法
+    const [PageContentRef, handleResetClick, handlequeryClick] = usePageSearch()
+
+    return {
+      contentTableConfig,
+      searchFormConfig,
+      handleResetClick,
+      handlequeryClick,
+      PageContentRef
+    }
   }
 })
 </script>

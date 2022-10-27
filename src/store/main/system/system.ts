@@ -40,21 +40,20 @@ const systemModule: Module<ISystemState, IRootState> = {
         // 这里的state[变量拼接字符串]在ts里需要给 state一个类型指定 所以用到了as (类型断言)
         const listData: any[] =
           // 这里需要把state断言成any
-          (state as any)[`${pageName}List`] ?? []
+          (state as any)[`${pageName}List`] ?? [] //相当于state[`${pageName}List`]
         console.log(pageName)
         return listData
       }
     },
+    // 根据url 来返回对应的list总数 给table组件
     pageListDataCount(state) {
       return (pageName: string) => {
-        switch (pageName) {
-          case 'users':
-            return state.usersCount
-            break
-          case 'role':
-            return state.roleCount
-            break
-        }
+        // 这里的state[变量拼接字符串]在ts里需要给 state一个类型指定 所以用到了as (类型断言)
+        const listCount: number =
+          // 这里需要把state断言成any
+          (state as any)[`${pageName}Count`] ?? 0 //state[`${pageName}Count`]
+        console.log(pageName)
+        return listCount
       }
     }
   },
